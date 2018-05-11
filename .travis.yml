@@ -1,3 +1,5 @@
 language: generic
 after_script:
-  - echo hi
+  - git clone https://github.com/Charcoal-SE/metasmoke.git
+  - ls
+  - ls metasmoke
