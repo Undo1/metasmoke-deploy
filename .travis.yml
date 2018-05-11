@@ -3,4 +3,5 @@ after_script:
   - git clone https://github.com/Charcoal-SE/metasmoke.git
   - cd metasmoke
   - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3 
+  - echo $key | base64 --decode > config/deploy/sshkey.pem
   - bundle exec cap production deploy
