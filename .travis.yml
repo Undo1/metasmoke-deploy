@@ -1,7 +1,7 @@
 language: generic
 cache:
   directories:
-    - vendor/bundle
+    - metasmoke/vendor/bundle
 after_script:
   - git clone https://github.com/Charcoal-SE/metasmoke.git
   - cd metasmoke
