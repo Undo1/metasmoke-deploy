@@ -1,9 +1,10 @@
 language: generic
 cache:
   directories:
-    - metasmoke/vendor/bundle
+    - all_teh_gems
 after_script:
   - git clone https://github.com/Charcoal-SE/metasmoke.git
+  - ln -s all_teh_gems metasmoke/vendor/bundle
   - cd metasmoke
   - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3 
   - echo $key | base64 --decode > sshkey.pem
