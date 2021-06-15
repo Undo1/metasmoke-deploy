@@ -1,0 +1,32 @@
+name: Deploy
+
+on: 
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: Charcoal-SE/metasmoke
+          ref: refs/heads/master
+      - uses: ruby/setup-ruby@v1
+        with:
+            bundler-cache: true
+
+      - name: Set known hosts
+        run: |
+          mkdir -p ~/.ssh/
+          echo "[metasmoke.erwaysoftware.com]:9923 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBO8yLYpR+DKoaaN8wfy5ms+JLV493IO/njASXdDtDnT2/z9BCXiO2ZnyBux7SpgRIKhqMko5r850jq1LD4A+030=" > ~/.ssh/known_hosts
+
+      - name: Get SSH key
+        env:
+          KEY: ${{ secrets.SSH_KEY }}
+        run: |
+          echo $KEY | base64 --decode > sshkey.pem
+          chmod 400 sshkey.pem
+
+      - name: Run deploy
+        run: bundle exec cap travis_production deploy
